@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <link href="main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="grid">
+      <div class="left">
+        <a id="back" href="index.html"
+          ><img id="icon" src="./media/arrowleft.svg" height="12" width="" />Go
+          Back</a
+        >
+      </div>
+      <div class="mid">
+        Transcribe faster.
+      </div>
+      <div class="right"></div>
+    </div>
+    <div class="wrapperMain">
+      <div class="newgrid">
+        <div class="left panel">
+          <h1>File 1</h1>
+          <img id="icon" src="./media/light.svg" height="150px" width="" />
+          <div class="innerContent">
+            Document 1
+          </div>
+          <button id="lightleft">
+            <a id="green" href="editorlight.html">Enter File 1</a>
+          </button>
+        </div>
+
+        <div class="right panel">
+          <h1>File 2</h1>
+          <img id="icon" src="./media/dark.svg" height="150px" width="" />
+          <div class="innerContent">
+            Document 2
+          </div>
+          <button id="lightleft">
+            <a id="green" href="editordark.html">Enter File 2</a>
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      require("./renderer.js");
+    </script>
+  </body>
+</html>
