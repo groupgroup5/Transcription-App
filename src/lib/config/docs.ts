@@ -346,11 +346,30 @@ export const examples: Example[] = [
     name: 'Authentication',
     href: '/authentication',
     code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/authentication'
-  }
+  },
+
   // {
   // 	name: "Forms",
-  // 	href: "#",
+  // 	href: "/forms",
   // 	label: "Soon",
   // 	code: "https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/forms"
-  // }
+  // },
+
+  {
+    name: 'Julia',
+    href: '/julia',
+    code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/transcript'
+  },
+
+  {
+    name: 'Robbie',
+    href: '/robbie',
+    code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/transcript'
+  },
+
+  {
+    name: 'Lanz',
+    href: '/lanz',
+    code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/transcript'
+  }
 ];
