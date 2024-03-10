@@ -8,7 +8,7 @@ This is a course requirement for CS 191/192 Software Engineering Courses of the 
 Visit [Git's official documentaion](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for installation process.
 
 **Node.js**: Visit [Node.js website](https://nodejs.org/en/download) to install.\
-Make sure that your favorite package manager is set up.
+Make sure that your favorite package manager is set up.\
 We will use `pnpm` for this guide.
 
 **Rust**: The back-end of Tauri framework.\
