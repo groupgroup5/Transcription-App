@@ -309,13 +309,13 @@ export const docsConfig: DocsConfig = {
   ]
 };
 
-type Example = {
+type Tab = {
   name: string;
   href: string;
   label?: string;
   code: string;
 };
-export const examples: Example[] = [
+export const tabs: Tab[] = [
   {
     name: 'Dashboard',
     href: '/dashboard',

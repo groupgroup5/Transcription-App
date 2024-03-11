@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { examples } from '$lib/config/docs';
+  import { tabs } from '$lib/config/docs';
   import { cn } from '$lib/utils';
   import ExampleCodeLink from './ExampleCodeLink.svelte';
 
@@ -10,17 +10,17 @@
 
 <div class="w-full">
   <div class={cn('', className)} {...$$restProps}>
-    {#each examples as example, index (index)}
+    {#each tabs as tab, index (index)}
       <a
-        href={example.href}
+        href={tab.href}
         class={cn(
           'px-2',
-          $page.url.pathname.startsWith(example.href)
+          $page.url.pathname.startsWith(tab.href)
             ? 'font-bold text-primary'
             : 'font-medium text-muted-foreground'
         )}
       >
-        {example.name}
+        {tab.name}
       </a>
     {/each}
   </div>
