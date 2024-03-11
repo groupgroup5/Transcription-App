@@ -1,14 +1,14 @@
 <script lang="ts">
   import { ArrowRight } from 'lucide-svelte';
   import { page } from '$app/stores';
-  import { examples } from '$lib/config/docs';
+  import { tabs } from '$lib/config/docs';
 
-  $: example = examples.find((example) => $page.url.pathname.startsWith(example.href));
+  $: tab = tabs.find((tab) => $page.url.pathname.startsWith(tab.href));
 </script>
 
-{#if example?.code}
+{#if tab?.code}
   <a
-    href={example.code}
+    href={tab.code}
     target="_blank"
     rel="nofollow"
     class="absolute right-0 top-0 hidden items-center rounded-[0.5rem] text-sm font-medium md:flex"

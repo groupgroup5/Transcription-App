@@ -3,7 +3,7 @@
   import '../styles/globals.css';
   import { WindowTitlebar } from '@tauri-controls/svelte';
 
-  import { ExamplesNav, TailwindIndicator } from '$components/docs';
+  import { Nav, TailwindIndicator } from '$components/docs';
   import { cn } from '$lib/utils';
   import { Sailboat } from 'lucide-svelte';
 
@@ -28,7 +28,7 @@
     <div class="pl-2 flex items-center p-1">
       <Sailboat class="h-5 w-5 " />
 
-      <ExamplesNav data-tauri-drag-region class="pl-1" />
+      <Nav data-tauri-drag-region class="pl-1" />
       <LightSwitch />
     </div>
   </WindowTitlebar>
