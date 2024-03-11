@@ -26,6 +26,6 @@ In the terminal, run the following commands:
     
 ## Resources
 
-Components from [shadcn-svelte](https://www.shadcn-svelte.com/).\
+Components from [shadcn-svelte](https://www.shadcn-svelte.com/) and [Radix Svelte](https://radix-svelte.com/).\
 CSS styling from [TailwindCSS](https://tailwindcss.com/). \
 Icons by [Lucide Icons](https://lucide.dev/) and [Radix Icons](https://lucide.dev/).
