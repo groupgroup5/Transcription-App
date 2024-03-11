@@ -67,14 +67,15 @@
     },
     "windows": [
       {
+        "maximized": true,
         "fullscreen": false,
         "title": "transcription-app-ui",
         "center": true,
         "resizable": true,
         "decorations": false,
         "transparent": true,
-        "height": 900,
-        "width": 1290
+        "height": 720,
+        "width": 1280
       }
     ]
   }
