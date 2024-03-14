@@ -316,16 +316,16 @@ type Tab = {
   code: string;
 };
 export const tabs: Tab[] = [
-  {
-    name: 'Dashboard',
-    href: '/dashboard',
-    code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/lib/components/docs/dashboard'
-  },
-  {
-    name: 'Cards',
-    href: '/cards',
-    code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/cards'
-  },
+  // {
+  //   name: 'Dashboard',
+  //   href: '/dashboard',
+  //   code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/lib/components/docs/dashboard'
+  // },
+  // {
+  //   name: 'Cards',
+  //   href: '/cards',
+  //   code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/cards'
+  // },
   // {
   // 	name: "Tasks",
   // 	href: "/tasks",
@@ -342,11 +342,11 @@ export const tabs: Tab[] = [
   // 	href: "/music",
   // 	code: "https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/apps/www/app/examples/music"
   // },
-  {
-    name: 'Authentication',
-    href: '/authentication',
-    code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/authentication'
-  },
+  // {
+  //   name: 'Authentication',
+  //   href: '/authentication',
+  //   code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/authentication'
+  // },
 
   // {
   // 	name: "Forms",
