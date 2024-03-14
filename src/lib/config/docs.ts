@@ -359,17 +359,5 @@ export const tabs: Tab[] = [
     name: 'Julia',
     href: '/julia',
     code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/transcript'
-  },
-
-  {
-    name: 'Robbie',
-    href: '/robbie',
-    code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/transcript'
-  },
-
-  {
-    name: 'Lanz',
-    href: '/lanz',
-    code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/transcript'
   }
 ];
