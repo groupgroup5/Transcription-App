@@ -99,7 +99,7 @@
   <main>
     <div id="main-content">
       {#each messages as message}
-        <div class="editor-line" on:focus={highlightRow}>
+        <div class="editor-line">
           <div id="inline-timestamp">{message.timestamp}</div>
           <div id="inline-text" contenteditable="true">{message.message}</div>
         </div>
