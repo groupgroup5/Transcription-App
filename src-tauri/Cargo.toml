@@ -20,6 +20,7 @@ tauri-plugin-app = "2.0.0-alpha.0"
 tauri-plugin-os = "2.0.0-alpha.0"
 tauri-plugin-shell = "2.0.0-alpha.0"
 tauri-plugin-window = "2.0.0-alpha.0"
+deflate64 = "0.1.5"
 
 [features]
 # by default Tauri runs in production mode

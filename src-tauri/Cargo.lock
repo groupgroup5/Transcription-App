@@ -497,6 +497,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "deflate64"
+version = "0.1.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "83ace6c86376be0b6cdcf3fb41882e81d94b31587573d1cfa9d01cd06bba210d"
+
+[[package]]
 name = "deranged"
 version = "0.3.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3194,6 +3200,7 @@ dependencies = [
 name = "transcription-app-ui"
 version = "0.1.0"
 dependencies = [
+ "deflate64",
  "serde",
  "serde_json",
  "tauri",
