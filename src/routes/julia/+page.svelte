@@ -81,11 +81,6 @@
       message: "Ave Maria",
     },
   ];
-
-  import { Button } from "$components/ui/button";
-
-  function highlightRow(){
-  }
   
 </script>
 
