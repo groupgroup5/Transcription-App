@@ -81,7 +81,19 @@
       message: "Ave Maria",
     },
   ];
-  
+
+  let selectedFont = "Verdana";
+  let fontName = "Verdana";
+
+  const fonts = [
+    { id: 1, name: "Arial" },
+    { id: 2, name: "Courier New" },
+    { id: 3, name: "Georgia" },
+    { id: 4, name: "Helvetica" },
+    { id: 5, name: "Lucida Console" },
+    { id: 6, name: "Verdana" }
+  ];
+
 </script>
 
 <div id="editor-container">
@@ -93,13 +105,18 @@
       </div>
       <div id="text-taskbar">
         <p>Text Editor Taskbar</p>
+        <select bind:value={selectedFont} on:change={() => fontName = selectedFont} style="background-color: #4A454E; color: white; width: 90%; border-radius: 3px;">
+          {#each fonts as font (font)}
+            <option value={font.name}>{font.name}</option>
+          {/each}
+        </select>
       </div>
     </div>
   </aside>
   <main>
     <div id="main-content">
-      {#each messages as message}
-        <div class="editor-line">
+      {#each messages as message (message)}
+        <div class="editor-line" style="font-family: {fontName};">
           <div id="inline-timestamp">{message.timestamp}</div>
           <div id="inline-text" contenteditable="true">{message.message}</div>
         </div>
@@ -160,6 +177,7 @@
     height: 100%;
     width: 80px;
     color: rgba(7, 76, 253, 0.30);
+    font-family: 'Courier New', Courier, monospace;
   }
 
   #inline-text{
