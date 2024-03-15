@@ -1,8 +1,5 @@
 <script>
 
-    import { Button } from '$components/ui/button';
-    import { Select } from '$components/ui/select';
-
     let projects = [
       { id: 1, name: "CS 199 Project" },
       { id: 2, name: "My Field Trip" },
