@@ -354,6 +354,11 @@ export const tabs: Tab[] = [
   // 	label: "Soon",
   // 	code: "https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/forms"
   // },
+  {
+    name: 'Home',
+    href: '/home',
+    code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/audio_transcribe'
+  },
 
   {
     name: 'Editor',
