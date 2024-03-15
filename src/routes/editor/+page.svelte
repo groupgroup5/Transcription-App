@@ -26,6 +26,10 @@
     },
     {
       timestamp: "00:00:00",
+      message: "Benedicta tu in mulieribus",
+    },
+    {
+      timestamp: "00:00:00",
       message: "Et benedictus",
     },
     {
