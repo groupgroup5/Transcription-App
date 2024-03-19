@@ -31,4 +31,20 @@
         }
     }
 
-</script>  
+</script>
+  
+<div class="flex justify-center flex-col items-center h-screen">
+    <label for="file-upload" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
+      Upload
+    </label>
+    <input id="file-upload" type="file" class="hidden" bind:this={fileInput} />
+
+    <div class="mt-4 p-4 bg-gray-100 rounded">
+        {#if uploadedFileName}
+          <p class="text-green-500">Uploaded {uploadedFileName}.</p>
+        {:else}
+          <p class="text-red-500">No file. Please upload your audio.</p>
+        {/if}
+    </div>
+</div>
+  
