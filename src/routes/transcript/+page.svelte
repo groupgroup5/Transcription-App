@@ -37,7 +37,7 @@
     <label for="file-upload" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
       Upload
     </label>
-    <input id="file-upload" type="file" class="hidden" bind:this={fileInput} />
+    <input id="file-upload" type="file" accept="audio/*" class="hidden" bind:this={fileInput} />
 
     <div class="mt-4 p-4 bg-gray-100 rounded">
         {#if uploadedFileName}
