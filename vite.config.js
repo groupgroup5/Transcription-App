@@ -6,7 +6,12 @@ export default defineConfig({
   clearScreen: false,
   server: {
     port: 1420,
-    strictPort: true
+    strictPort: true,
+    fs: {
+      allow: [
+        './static',
+      ],
+    },
   },
   envPrefix: ['VITE_', 'TAURI_']
 });

@@ -35,6 +35,7 @@
     "d3-scale": "^4.0.2",
     "escape-html": "^1.0.3",
     "esm-env": "^1.0.0",
+    "flask": "^0.2.10",
     "hast-util-to-html": "^8.0.4",
     "lucide-svelte": "^0.263.0",
     "mdast-util-to-string": "^4.0.0",
