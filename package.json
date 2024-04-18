@@ -29,6 +29,7 @@
     "@tauri-apps/api": "2.0.0-alpha.5",
     "@tauri-apps/plugin-window": "2.0.0-alpha.0",
     "@tauri-controls/svelte": "^0.1.0",
+    "bits-ui": "^0.19.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "d3-scale": "^4.0.2",
@@ -52,6 +53,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.42.1",
     "@sveltejs/adapter-auto": "^2.1.0",
     "@sveltejs/adapter-static": "2.0.3",
     "@sveltejs/kit": "^1.22.4",

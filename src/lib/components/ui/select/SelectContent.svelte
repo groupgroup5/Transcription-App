@@ -1,26 +1,39 @@
 <script lang="ts">
-  import { Select as SelectPrimitive } from 'radix-svelte';
-  import { cn } from '$lib/utils';
+	import { Select as SelectPrimitive } from "bits-ui";
+	import { cn, flyAndScale } from "$lib/utils.js";
+	import { scale } from "svelte/transition";
 
-  let className: string | undefined | null = undefined;
-  export { className as class };
+	type $$Props = SelectPrimitive.ContentProps;
+	type $$Events = SelectPrimitive.ContentEvents;
+
+	export let sideOffset: $$Props["sideOffset"] = 4;
+	export let inTransition: $$Props["inTransition"] = flyAndScale;
+	export let inTransitionConfig: $$Props["inTransitionConfig"] = undefined;
+	export let outTransition: $$Props["outTransition"] = scale;
+	export let outTransitionConfig: $$Props["outTransitionConfig"] = {
+		start: 0.95,
+		opacity: 0,
+		duration: 50,
+	};
+
+	let className: $$Props["class"] = undefined;
+	export { className as class };
 </script>
 
-<SelectPrimitive.Portal>
-  <SelectPrimitive.Content
-    class={cn(
-      'relative z-50 min-w-[8rem] translate-y-1 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md animate-in fade-in-80',
-      className
-    )}
-    {...$$restProps}
-  >
-    <SelectPrimitive.Viewport
-      class={cn(
-        'p-1',
-        'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
-      )}
-    >
-      <slot />
-    </SelectPrimitive.Viewport>
-  </SelectPrimitive.Content>
-</SelectPrimitive.Portal>
+<SelectPrimitive.Content
+	{inTransition}
+	{inTransitionConfig}
+	{outTransition}
+	{outTransitionConfig}
+	{sideOffset}
+	class={cn(
+		"relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md outline-none",
+		className
+	)}
+	{...$$restProps}
+	on:keydown
+>
+	<div class="w-full p-1">
+		<slot />
+	</div>
+</SelectPrimitive.Content>

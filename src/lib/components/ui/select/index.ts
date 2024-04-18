@@ -1,10 +1,34 @@
-import { Select as SelectPrimitive } from 'radix-svelte';
+import { Select as SelectPrimitive } from "bits-ui";
 
-export { default as SelectContent } from './SelectContent.svelte';
-export { default as SelectLabel } from './SelectItem.svelte';
-export { default as SelectSeparator } from './SelectSeparator.svelte';
-export { default as SelectTrigger } from './SelectTrigger.svelte';
+import Label from "./SelectLabel.svelte";
+import Item from "./SelectItem.svelte";
+import Content from "./SelectContent.svelte";
+import Trigger from "./SelectTrigger.svelte";
+import Separator from "./SelectSeparator.svelte";
 
-export const Select = SelectPrimitive.Root;
-export const SelectGroup = SelectPrimitive.Group;
-export const SelectValue = SelectPrimitive.Value;
+const Root = SelectPrimitive.Root;
+const Group = SelectPrimitive.Group;
+const Input = SelectPrimitive.Input;
+const Value = SelectPrimitive.Value;
+
+export {
+	Root,
+	Group,
+	Input,
+	Label,
+	Item,
+	Value,
+	Content,
+	Trigger,
+	Separator,
+	//
+	Root as Select,
+	Group as SelectGroup,
+	Input as SelectInput,
+	Label as SelectLabel,
+	Item as SelectItem,
+	Value as SelectValue,
+	Content as SelectContent,
+	Trigger as SelectTrigger,
+	Separator as SelectSeparator,
+};
