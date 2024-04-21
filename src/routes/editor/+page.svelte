@@ -102,7 +102,11 @@
 
 <div id="editor-container">
   <aside>
-    <div id="video-container">video goes here</div>
+    <div id="video-container">
+      {#await import('./player/Player.svelte') then { default: Player }}
+      <svelte:component this={Player} />
+      {/await}
+    </div>
     <div class="other-taskbar">
       <div id="video-taskbar">
         <p>Video Taskbar</p>
