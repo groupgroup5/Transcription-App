@@ -1,102 +1,11 @@
 <script lang="ts">
-  const messages = [
-    {
-      timestamp: "00:00:00",
-      message: "Ave Maria",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Gratia plena",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Maria, gratia plena",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Maria, gratia plena",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Ave, ave dominus",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Dominus tecum",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Benedicta tu in mulieribus",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Et benedictus",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Et benedictus fructus ventris",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Ventris tui, Iesus",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Ave Maria",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Ave Maria",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Mater Dei",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Ora pro nobis peccatoribus",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Ora, ora pro nobis",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Ora pro nobis peccatoribus",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Nunc et in hora mortis",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "In hora mortis nostrae",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "In hora mortis nostrae",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "In hora mortis nostrae",
-    },
-    {
-      timestamp: "00:00:00",
-      message: "Ave Maria",
-    },
-  ];
-
-  let selectedFont = "Verdana";
-  let fontName = "Verdana";
-
-  const fonts = [
-    { id: 1, name: "Arial" },
-    { id: 2, name: "Courier New" },
-    { id: 3, name: "Georgia" },
-    { id: 4, name: "Helvetica" },
-    { id: 5, name: "Lucida Console" },
-    { id: 6, name: "Verdana" }
-  ];
+  import Transcript from './transcript/Transcript.svelte';
+  
+  let segments = [
+        { id: 0, startTimestamp: "00:00:00", endTimestamp: "00:00:00", text: "" },
+        { id: 1, startTimestamp: "00:00:00", endTimestamp: "00:00:00", text: "" },
+        { id: 2, startTimestamp: "00:00:00", endTimestamp: "00:00:00", text: "" }
+    ];
 
 </script>
 
@@ -113,22 +22,13 @@
       </div>
       <div id="text-taskbar">
         <p>Text Editor Taskbar</p>
-        <select bind:value={selectedFont} on:change={() => fontName = selectedFont} style="background-color: #4A454E; color: white; width: 90%; border-radius: 3px;">
-          {#each fonts as font (font)}
-            <option value={font.name}>{font.name}</option>
-          {/each}
-        </select>
       </div>
     </div>
   </aside>
   <main>
+  
     <div id="main-content">
-      {#each messages as message (message)}
-        <div class="editor-line" style="font-family: {fontName};">
-          <div id="inline-timestamp">{message.timestamp}</div>
-          <div id="inline-text" contenteditable="true">{message.message}</div>
-        </div>
-      {/each}
+      <Transcript {segments}/>
     </div>
   </main>
 </div>
@@ -173,27 +73,6 @@
     padding: 5px;
   }
 
-  .editor-line {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    width: 100%;
-  }
-
-  #inline-timestamp {
-    height: 100%;
-    width: 80px;
-    color: rgba(7, 76, 253, 0.30);
-    font-family: 'Courier New', Courier, monospace;
-  }
-
-  #inline-text{
-    height: 100%;
-    width: calc(100% - 10px);
-    color: #000;
-    margin-left: 20px;
-  }
 
   #editor-container {
     display: flex;
