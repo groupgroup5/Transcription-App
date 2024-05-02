@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import { FormInput, User } from "lucide-svelte";
 
   
   class Project {
@@ -38,6 +39,8 @@
       this._lastOpen = value;
     }
   }
+
+  let currentFile: HTMLFormElement;
 
   let projects: Array<Project> = [
     new Project(1, "CS 199 Project", new Date(2024, 1, 2), new Date(2024, 1, 2)),
@@ -92,7 +95,13 @@
 <div class="container mx-auto px-4 my-2 w-15/16">
   <h1 class="text-4xl font-bold mb-4 mr-4">Create File</h1>
   <div class="flex flex-row my-8 mx-30 w-15/16 place-content-evenly">
-    <button class="rounded-md p-2 w-64 h-12 border border-gray-300 text-center align-middle hover:border-0 hover:bg-sky-600 hover:text-white">Import File</button>
+      <label class="rounded-md p-2 w-64 h-12 border border-gray-300 text-center align-middle hover:border-0 hover:bg-sky-600 hover:text-white">
+        Import File
+        <form method="POST" enctype="multipart/form-data" bind:this={currentFile} action="?/uploadFile">
+          <input type="file" name="importFile" accept="audio/*,video/*" style="display: none;" on:change={() => currentFile.requestSubmit()} />
+        </form>
+      </label>
+    
     <button on:click={ () => goto('/editor') } class="rounded-md p-2 w-64 h-12 border border-gray-300 text-center align-middle hover:border-0 hover:bg-sky-600 hover:text-white">Blank File</button>
   </div>
   
