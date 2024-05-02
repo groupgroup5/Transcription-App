@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('can open start page', async ({ page }) => {
   await page.goto('http://localhost:1420/');
 
-  await expect(page).toHaveURL('http://localhost:1420/dashboard');
+  await expect(page).toHaveURL('http://localhost:1420/home');
 });
 
 test('can open home', async ({ page }) => {
