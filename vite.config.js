@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import { vite as vidstack } from 'vidstack/plugins';
 
 export default defineConfig({
-  plugins: [sveltekit(), vidstack({ include: /player\// })],
+  plugins: [vidstack({ include: /editor\// }), sveltekit()],
   clearScreen: false,
   server: {
     port: 1420,
