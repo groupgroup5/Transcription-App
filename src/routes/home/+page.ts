@@ -5,3 +5,5 @@ export const load: PageLoad = async () => {
     title: 'Home'
   };
 };
+
+export const prerender = false;
