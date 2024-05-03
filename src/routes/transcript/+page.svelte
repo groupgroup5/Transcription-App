@@ -1,99 +1,89 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
-    import {onMount} from 'svelte';
+    import Transcript from './transcript/Transcript.svelte';
+    import Upload from './upload/Upload.svelte';
+    
+    let isTranscribed = false;
 
+    let segments: any[] = [];
     let text = '';
     let content: string[] = [];
-
-    let fileInput: HTMLInputElement | null = null;
-    let uploadedFileName: string | null = null;
-    const popupOpen = writable(false);
-
-    onMount(() => {
-        loadItems();
-    });
 
     const loadItems = async () => {
         const response = await fetch('output.txt');
         text = await response.text();
         content = text.split('\n');
+        segments = content.map((line, index) => ({
+            id: index,
+            startTimestamp: line.substring(1, 7),
+            endTimestamp: line.substring(12, 18),
+            text: line.substring(22)
+        }));
     };
-
-    function togglePopup() {
-        popupOpen.update(n => !n);
-    }
-
-    function handleFileUpload(event: Event) {
-        const files = (event.target as HTMLInputElement).files;
-        if (files) {
-            uploadedFileName = files[0].name;
-            // Handle uploaded files here
-        }
-    }
-
-    function handleDragOver(event: DragEvent) {
-        event.preventDefault();
-        if (event.dataTransfer) {
-            event.dataTransfer.dropEffect = 'copy'; // Visual feedback
-        }
-    }
-
-    function handleDrop(event: DragEvent) {
-        event.preventDefault();
-        const files = event.dataTransfer?.files;
-        if (files) {
-            uploadedFileName = files[0].name;
-            // Handle dropped files here
-        }
-    }
-
-    $: {
-        if (fileInput) {
-            fileInput.addEventListener('change', handleFileUpload);
-            fileInput.addEventListener('dragover', handleDragOver);
-            fileInput.addEventListener('drop', handleDrop);
-        }
+    
+    function handleTranscribe() {
+        loadItems();
     }
 
 </script>
   
-<div class="flex justify-center flex-col items-center h-screen">
+<div id="editor-container">
+    <aside>
+      <div id="video-container">
+        <Upload on:transcribe={handleTranscribe}/>
+      </div>
+    </aside>
 
-    {#if uploadedFileName}
-        <button on:click={togglePopup} class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
-        Transcribe
-        </button>
-    {:else}
-        <label for="file-upload" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
-        Upload
-        </label>
-        <input id="file-upload" type="file" accept="audio/*" class="hidden" bind:this={fileInput} />
-    {/if}
-    
-    {#if $popupOpen}
-        <div class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center h-screen w-screen">
-            <div class="bg-white p-6 rounded h-3/4 w-1/2 overflow-y-auto">
-                <div class="flex justify-between items-center">
-                    <p class="text-2xl font-bold pt-2 pb-4">Transcription</p>
-                    <button on:click={togglePopup} class="text-gray-500 hover:text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-                {#each content as line (line)}
-                        <p class="mt-2">{line}</p>
-                {/each}
-            </div>
-        </div>
-    {/if}
-
-    <div class="mt-4 p-4 bg-gray-100 rounded">
-        {#if uploadedFileName}
-          <p class="text-green-500">Uploaded {uploadedFileName}.</p>
-        {:else}
-          <p class="text-red-500">No file. Please upload your audio.</p>
-        {/if}
-    </div>
+    <main>
+      <div id="main-content">
+        <Transcript {segments}/>
+      </div>
+    </main>
 </div>
   
+<style>
+  
+    #video-container {
+      height: 30vh;
+      width: 100%;
+      background-color: #1C1B1F;
+      color: white;
+      padding: 5px;
+    }
+  
+  
+    #editor-container {
+      display: flex;
+      flex-direction: row;
+      height: 95vh;
+    }
+  
+    aside {
+      background: #4A454E;
+      height: 100%;
+      width: 30vw;
+      min-width: 350px;
+    }
+  
+    main {
+      background: #FAECFF;
+      height: 100%;
+      width: 70vw;
+      align-items: center;
+      min-width: 800px;
+    }
+  
+    #main-content {
+      display: grid;
+      flex-direction: column;
+      height: calc(100% - 80px);
+      width: calc(100% - 80px);
+      background-color: white;
+      margin: 40px;
+      margin-bottom: 0px;
+      padding: 20px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+</style>
