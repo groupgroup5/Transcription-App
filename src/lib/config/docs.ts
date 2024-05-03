@@ -367,8 +367,8 @@ export const tabs: Tab[] = [
   },
 
   {
-    name: 'Transcript',
-    href: '/transcript',
+    name: 'Automatic Transcription',
+    href: '/autotrans',
     code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/transcript'
   }
 ];
