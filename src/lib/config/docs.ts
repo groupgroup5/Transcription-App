@@ -361,7 +361,7 @@ export const tabs: Tab[] = [
   },
 
   {
-    name: 'Editor',
+    name: 'Manual Editor',
     href: '/editor',
     code: 'https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/routes/examples/transcript'
   },
