@@ -1,63 +1,39 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { FormInput, User } from "lucide-svelte";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+  import * as Dialog from "$lib/components/ui/dialog";
+  import type Project from "./Project.svelte";
+  import type { PageData } from './$types';
 
-  
-  class Project {
-    private _id: number;
-    private _name: string;
-    private _lastEdit: Date;
-    private _lastOpen: Date;
-    
-    constructor(id: number, name: string, lastEdit: Date, lastOpen: Date) {
-      this._id = id;
-      this._name = name;
-      this._lastEdit = lastEdit;
-      this._lastOpen = lastOpen;
-    }
-
-    get name() : string {
-      return this._name;
-    }
-    get lastEdit() : Date {
-      return this._lastEdit;
-    }
-    get lastOpen() : Date {
-      return this._lastOpen;
-    }
-    get id() : Number {
-      return this._id;
-    }
-
-    set name(value: string) {
-      this._name = value;
-    }
-    set lastEdit(value: Date) {
-      this._lastEdit = value;
-    }
-    set lastOpen(value: Date) {
-      this._lastOpen = value;
-    }
-  }
+	export let data: PageData;
+  let projects = data.projects as Project[];
 
   let currentFile: HTMLFormElement;
+  let currentRename: HTMLFormElement;
+  let currentDelete: HTMLFormElement;
+  let currentExport: HTMLFormElement;
 
-  let projects: Array<Project> = [
-    new Project(1, "CS 199 Project", new Date(2024, 1, 2), new Date(2024, 1, 2)),
-    new Project(2, "My Field Trip", new Date(2024, 1, 3), new Date(2024, 1, 5)),
-    new Project(3, "CS 192 Project", new Date(2024, 1, 4), new Date(2024, 1, 13)),
-    new Project(4, "Graduation Video", new Date(2024, 2, 1), new Date(2024, 3, 22)),
-    new Project(5, "My Cover", new Date(2024, 2, 2), new Date(2024, 3, 20)),
-    new Project(6, "Secret", new Date(2024, 3, 2), new Date(2024, 4, 6)),
-  ];
-
-  function clickFileOptions(){
-    //open pop up menu for file options (delete, rename, move, export)
+  function clickImportFile() {
+    currentFile.requestSubmit();
+    goto('editor');
   }
 
-  let sortOptions = ["Recently Opened", "Recently Edited", "Name"]
+  function clickFile() {
+    //open file
+    goto('editor');
+  }
+
+  function clickRenameFile() {
+    currentRename.requestSubmit();
+  }
+
+  function clickDeleteFile() {
+    currentDelete.requestSubmit();
+  }
+
+  let sortOptions = ["Recently Edited", "Date Created", "Name"]
   let searchTerm = '';
-  let sortBy = "Recently Opened";
+  let sortBy = "Recently Edited";
   let sortedProjects = projects;
 
   function sortProjects(sortBy: String){
@@ -66,22 +42,10 @@
         return projects.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case "Recently Edited":
-        return projects.sort(function(a, b) { 
-          if (a.lastEdit > b.lastEdit){
-            return 1;
-          } else {
-            return -1;
-          }}
-        );
+        return projects.sort((a, b) => a.lastModified.localeCompare(b.lastModified));
         break;
       default:
-        return projects.sort(function(a, b) { 
-          if (a.lastOpen > b.lastOpen){
-            return 1;
-          } else {
-            return -1;
-          }}
-        );
+        return projects.sort((a, b) => a.creationDate.localeCompare(b.creationDate));
         break;
     }
   }
@@ -98,7 +62,7 @@
       <label class="rounded-md p-2 w-64 h-12 border border-gray-300 text-center align-middle hover:border-0 hover:bg-sky-600 hover:text-white">
         Import File
         <form method="POST" enctype="multipart/form-data" bind:this={currentFile} action="?/uploadFile">
-          <input type="file" name="importFile" accept="audio/*,video/*" style="display: none;" on:change={() => currentFile.requestSubmit()} />
+          <input type="file" name="importFile" accept="audio/*,video/*" style="display: none;" on:change={() => {clickImportFile()}} />
         </form>
       </label>
     
@@ -117,10 +81,45 @@
 
   <div class="flex flex-col w-full space-y-2 self-center overflow-y-auto">
     {#each filteredProjects as project (project.id)}
-      <button on:click={ () => goto('/editor') } class="flex flex-rows justify-between border border-gray-300 p-2 h-12 rounded-lg items-center hover:bg-gray-300">
-          <h2 class="text-2xl font-bold mb-2">{project.name}</h2>
-          <button class="text-2xl font-bold mb-2">⋯</button>
-      </button>
+      <div class="flex flex-rows justify-between border border-gray-300 p-2 h-12 rounded-lg items-center hover:bg-gray-300">
+          <button class="text-2xl font-bold mb-2 outline-none" on:click={() => {clickFile()}}>{ project.name }</button>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>⋯</DropdownMenu.Trigger>
+            <DropdownMenu.Content>
+              <DropdownMenu.Group>
+                <DropdownMenu.Label>File Options</DropdownMenu.Label>
+                <DropdownMenu.Item>
+                  <Dialog.Root>
+                    <Dialog.Trigger>Rename File</Dialog.Trigger>
+                    <Dialog.Content class="sm:max-w-[425px]">
+                      <div class="grid gap-4 py-4">
+                        <form method="POST" bind:this={ currentRename } action="?/renameFile">
+                          <label>
+                            Rename File
+                            <input type="text" name="renameFileString">
+                          </label>
+                          <input type="hidden" name="renameFileId" value={ project.id }>
+                          <button on:click={() => clickRenameFile()}>Save changes</button>
+                        </form>
+                      </div>
+                    </Dialog.Content>
+                  </Dialog.Root>
+                </DropdownMenu.Item>
+                <form method="POST" bind:this={ currentDelete } action="?/deleteFile">
+                  <DropdownMenu.Item on:click={() => clickDeleteFile()}>
+                    <label>
+                      Delete File
+                      <input type="hidden" name="deleteFile" value={ project.id }>
+                    </label>
+                  </DropdownMenu.Item>
+                </form>
+                <DropdownMenu.Item>
+                  Export File
+                </DropdownMenu.Item>
+              </DropdownMenu.Group>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+        </div>
     {/each}
   </div>
 </div>

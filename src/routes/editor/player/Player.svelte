@@ -1,6 +1,6 @@
 <script>
     import 'vidstack/bundle';
-    let src = "Views.mp4";
+    let src = "https://files.vidstack.io/sprite-fight/720.mp4";
 
 
 </script>

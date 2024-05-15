@@ -1,6 +1,15 @@
 import type { Actions } from "@sveltejs/kit";
 import fs from "node:fs";
-import { addFileEntry } from "$lib/server/db";
+import * as db from "$lib/server/db";
+import type Project from "./Project.svelte";
+import type { PageLoad } from "../$types";
+
+export const load: PageLoad = async ({ params }) => {
+    return {
+        projects: db.getEntry(-1),
+        title: 'Home',
+    };
+};
 
 export const actions: Actions = {
     uploadFile: async({ request }) => {
@@ -21,7 +30,29 @@ export const actions: Actions = {
         fs.writeFileSync(filepath, buffer, "base64");
 
         let newSrtFilepath = 'src/uploads/srt/' + newFileName.slice(0, -3) + 'srt'
-        fs.writeFileSync(filepath, "", "base64");
-        addFileEntry(file, filepath, newSrtFilepath);
+        fs.writeFileSync(filepath, " ", "base64");
+
+        db.addFileEntry(file, filepath, newSrtFilepath);
+    },
+    renameFile: async({ request }) => {
+        const renameFileForm = await request.formData();
+
+        const id = renameFileForm.get('renameFileId')?.valueOf() as number;
+        const filename = renameFileForm.get('renameFileString')?.valueOf() as string;
+        console.log(id, filename);
+    },
+    deleteFile: async({ request }) => {
+        const deleteFileForm = await request.formData();
+
+        const id = deleteFileForm.get('deleteFile')?.valueOf() as number;
+        console.log(id);
+
+        let entryToDelete = db.getEntry(id) as Project;
+
+        if (fs.existsSync(entryToDelete.subs)) {
+            fs.unlink(entryToDelete.subs, (err => {if (err) console.log(err);}));
+        }
+        fs.unlink(entryToDelete.video, (err => {if (err) console.log(err);}));
+        db.deleteEntry(id);
     }
 }
