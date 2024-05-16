@@ -4,36 +4,18 @@ import * as db from "$lib/server/db";
 import type Project from "../Project.svelte";
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, url }) => {
+    let id = url.searchParams.get('id');
+    let file = db.getEntry(id === null? -1 : parseInt(id)) as Project;
+
     return {
-        projects: db.getEntry(-1),
-        title: 'Home',
+        file: file,
+        filecontent: fs.existsSync(file.subs) ? fs.readFileSync(file.subs) : null,
+        title: 'Editor',
     };
 };
 
 export const actions: Actions = {
-    uploadFile: async({ request }) => {
-        const uploadFileForm = await request.formData();
-
-        const file = uploadFileForm.get('importFile')?.valueOf() as File;
-        console.log(
-            file?.name,
-            file?.type,
-            file?.webkitRelativePath
-        );
-
-        const buffer = Buffer.from(await file.arrayBuffer());
-        let newFileName = file.name.replace(/[.](?=.*[.])/g, "");
-        newFileName = newFileName.replace(/\s+/g, "");
-
-        let filepath = 'src/uploads/audio-video/' + newFileName;
-        fs.writeFileSync(filepath, buffer, "base64");
-
-        let newSrtFilepath = 'src/uploads/srt/' + newFileName.slice(0, -3) + 'srt'
-        fs.writeFileSync(filepath, " ", "base64");
-
-        db.addFileEntry(file, filepath, newSrtFilepath);
-    },
     renameFile: async({ request }) => {
         const renameFileForm = await request.formData();
 
