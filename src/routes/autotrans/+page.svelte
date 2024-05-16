@@ -43,47 +43,48 @@
 </div>
   
 <style>
-  
+    
     #video-container {
       height: 30vh;
       width: 100%;
-      background-color: #1C1B1F;
+      background-color: #0c0c1b;
       color: white;
       padding: 5px;
     }
-  
-  
+
+
     #editor-container {
       display: flex;
       flex-direction: row;
       height: 95vh;
     }
-  
+
     aside {
-      background: #4A454E;
+      background: #19172c;
       height: 100%;
       width: 30vw;
       min-width: 350px;
     }
-  
+
     main {
-      background: #FAECFF;
       height: 100%;
       width: 70vw;
       align-items: center;
       min-width: 800px;
     }
-  
+
     #main-content {
       display: grid;
+      border-color: #19172c;
+      border-width: 2px;
       flex-direction: column;
       height: calc(100% - 80px);
       width: calc(100% - 80px);
-      background-color: white;
       margin: 40px;
       margin-bottom: 0px;
       padding: 20px;
       overflow-y: scroll;
       overflow-x: hidden;
+      border-radius: 5px;
     }
-</style>
+  </style>
