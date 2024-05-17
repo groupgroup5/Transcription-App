@@ -6,6 +6,7 @@
 	export let data: PageData;
   let openFile = data.file as Project;
   let openFileContent = data.filecontent;
+  let filepathToVid = openFile.video;
 
   
   let segments = [
