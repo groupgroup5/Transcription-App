@@ -1,7 +1,7 @@
 <script lang="ts">
   import Transcript from './transcript/Transcript.svelte';
   import type { PageData } from './$types';
-  import type Project from '../Project.svelte';
+  import type { Project } from "$lib/types/Project";
 	
 	export let data: PageData;
   let openFile = data.file as Project;
