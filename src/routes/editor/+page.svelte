@@ -2,18 +2,32 @@
   import Transcript from './transcript/Transcript.svelte';
   import type { PageData } from './$types';
   import type { Project } from "$lib/types/Project";
+  import type { SegmentType } from './transcript/Segment.svelte';
 	
 	export let data: PageData;
   let openFile = data.file as Project;
-  let openFileContent = data.filecontent;
   let filepathToVid = openFile.video;
-
   
-  let segments = [
-        { id: 0, startTimestamp: "00:00:00", endTimestamp: "00:00:00", text: "" },
-        { id: 1, startTimestamp: "00:00:00", endTimestamp: "00:00:00", text: "" },
-        { id: 2, startTimestamp: "00:00:00", endTimestamp: "00:00:00", text: "" }
-    ];
+  // Load transcript file content to segments variable
+  let transcriptFileContent = data.filecontent; 
+  let contentAsArray = (transcriptFileContent === null ? [] : transcriptFileContent.split('\n'));
+  let segments: SegmentType[] = contentAsArray.map((line, index) => ({
+          id: index,
+          startTimestamp: line.substring(1, 7),
+          endTimestamp: line.substring(12, 18),
+          text: line.substring(22)
+  }));
+  
+
+  function sendSegmentsToContents(){
+    let contentInArray = [];
+    contentInArray = segments.map((segment) => (
+      "[" + segment.startTimestamp + "s -> " + segment.endTimestamp + "s] " + segment.text
+    ));
+    
+    transcriptFileContent = contentInArray.join("\n");
+
+  }
 
 </script>
 
@@ -21,7 +35,7 @@
   <aside>
     <div id="video-container">
       {#await import('./player/Player.svelte') then { default: Player }}
-      <svelte:component this={Player} />
+      <svelte:component this={Player} src={filepathToVid} />
       {/await}
     </div>
     <div class="other-taskbar">
@@ -30,13 +44,14 @@
       </div>
       <div id="text-taskbar">
         <p>Text Editor Taskbar</p>
+        <button type="button" on:click={sendSegmentsToContents} class="rounded-md p-2 w-64 h-12 border border-gray-300 text-center align-middle hover:border-0 hover:bg-sky-600 hover:text-white">Save Transcript</button>
       </div>
     </div>
   </aside>
   <main>
   
     <div id="main-content">
-      <Transcript {segments}/>
+      <Transcript bind:segments={segments}/>
     </div>
   </main>
 </div>

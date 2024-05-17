@@ -2,9 +2,20 @@
     - Properly update internal segment value when edited
 -->
 
-<script>
+<script lang="ts" context="module">
 
-export let segment = {
+  export type SegmentType = { // a discrete part of the transcript
+          id: number, 
+          startTimestamp: string, 
+          endTimestamp: string, 
+          text: string
+  }
+  
+</script>
+
+<script lang="ts">
+
+export let segment : SegmentType = {
   id: 0,
   startTimestamp: "00:00:00",
   endTimestamp: "00:00:00",

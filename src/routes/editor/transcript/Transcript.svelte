@@ -5,15 +5,11 @@
 
 <script lang="ts">
     import Segment from './Segment.svelte';
+    import type { SegmentType } from './Segment.svelte';
 
-    type Segment = { // a discrete part of the transcript
-        id: number, 
-        startTimestamp: string, 
-        endTimestamp: string, 
-        text: string
-    }
 
-    export let segments: Segment[] = [];
+
+    export let segments: SegmentType[] = [];
 
     function addNewSegment(){
     /* 
@@ -33,7 +29,7 @@
         console.log(newSegment.id);
         segments = [...segments, newSegment];
     }
-    function removeSegment(current: Segment){
+    function removeSegment(current: SegmentType){
         segments = segments.filter((segment) => segment.id !== current.id);
     }
 

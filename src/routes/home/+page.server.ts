@@ -10,6 +10,14 @@ function directoryGenerators() {
     fs.mkdirSync('src/uploads/srt');
 }
 
+function generateInitialTranscriptTemplate(): string{
+    /* TODO make editing this template easier*/
+    let template 
+        = `[000.00s -> 000.00s] \n[000.00s -> 000.00s] \n[000.00s -> 000.00s] `;
+    
+    return template;
+}
+
 export const load: PageServerLoad = async ({ params }) => {
     return {
         projects: db.getEntry(-1),
@@ -39,7 +47,7 @@ export const actions: Actions = {
         fs.writeFileSync(filepath, buffer, "base64");
 
         let newSrtFilepath = 'src/uploads/srt/' + newFileName.slice(0, -3) + 'srt'
-        fs.writeFileSync(newSrtFilepath, " ", "base64");
+        fs.writeFileSync(newSrtFilepath, generateInitialTranscriptTemplate(), "utf8");
 
         db.addFileEntry(file, filepath, newSrtFilepath);
     },
