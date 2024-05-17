@@ -6,7 +6,7 @@
 <script lang="ts">
     import Segment from './Segment.svelte';
 
-    type Segment = { // a discrete part of the transcript
+    type Segment = {
         id: number, 
         startTimestamp: string, 
         endTimestamp: string, 
@@ -16,9 +16,6 @@
     export let segments: Segment[] = [];
 
     function addNewSegment(){
-    /* 
-    Handles the logic of updating segments array and what the default values of new segments are
-    */
         let previousSegment = segments[segments.length - 1];
         let previousSegmentEndTimestamp = (segments.length ? previousSegment.endTimestamp : "00:00:00");
 
