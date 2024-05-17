@@ -4,12 +4,6 @@ import * as db from "$lib/server/db";
 import type { Project } from "$lib/types/Project.js";
 import type { PageServerLoad } from './$types';
 
-function directoryGenerators() {
-    fs.mkdirSync('src/uploads');
-    fs.mkdirSync('src/uploads/audio-video');
-    fs.mkdirSync('src/uploads/srt');
-}
-
 export const load: PageServerLoad = async ({ params }) => {
     return {
         projects: db.getEntry(-1),
@@ -32,9 +26,6 @@ export const actions: Actions = {
         let newFileName = file.name.replace(/[.](?=.*[.])/g, "");
         newFileName = newFileName.replace(/\s+/g, "");
 
-        if (!fs.existsSync('src/uploads')){
-            directoryGenerators();
-        }
         let filepath = 'src/uploads/audio-video/' + newFileName;
         fs.writeFileSync(filepath, buffer, "base64");
 
