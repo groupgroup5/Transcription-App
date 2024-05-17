@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
   import * as Dialog from "$lib/components/ui/dialog";
-  import type { Project } from "../../lib/types/Project.js";
+  import type { Project } from "$lib/types/Project.ts";
   import type { PageData } from './$types';
 
 	export let data: PageData;
