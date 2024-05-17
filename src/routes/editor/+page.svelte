@@ -1,11 +1,30 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+  import { writable } from 'svelte/store';
   import Transcript from './transcript/Transcript.svelte';
+  import Upload from './upload/Upload.svelte';
   
-  let segments = [
-        { id: 0, startTimestamp: "00:00:00", endTimestamp: "00:00:00", text: "" },
-        { id: 1, startTimestamp: "00:00:00", endTimestamp: "00:00:00", text: "" },
-        { id: 2, startTimestamp: "00:00:00", endTimestamp: "00:00:00", text: "" }
-    ];
+  let isTranscribed = false;
+
+  let segments: any[] = [];
+  let text = '';
+  let content: string[] = [];
+
+  const loadItems = async () => {
+      const response = await fetch('output.txt');
+      text = await response.text();
+      content = text.split('\n');
+      segments = content.map((line, index) => ({
+          id: index,
+          startTimestamp: line.substring(1, 7),
+          endTimestamp: line.substring(12, 18),
+          text: line.substring(22)
+      }));
+  };
+  
+  function handleTranscribe() {
+      loadItems();
+  }
 
 </script>
 
@@ -17,12 +36,7 @@
       {/await}
     </div>
     <div class="other-taskbar">
-      <div id="video-taskbar">
-        <p>Video Taskbar</p>
-      </div>
-      <div id="text-taskbar">
-        <p>Text Editor Taskbar</p>
-      </div>
+      <Upload on:transcribe={handleTranscribe}/>
     </div>
   </aside>
   <main>
@@ -37,32 +51,8 @@
   .other-taskbar {
     display: flex;
     flex-direction: column;
-    align-items: center;
-  }
-
-  #video-taskbar {
-    display: flex;
-    flex-direction: row;
-    height: 20vh;
-    width: 90%;
-    background-color: #0c0c1b;
-    margin-top: 30px;
-    margin-bottom: 0px;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-  }
-
-  #text-taskbar {
-    display: flex;
-    flex-direction: column;
     height: 32vh;
-    width: 90%;
-    background-color: #0c0c1b;
-    margin: 30px;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
+    align-items: center;
   }
 
   #video-container {
