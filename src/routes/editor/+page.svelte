@@ -1,5 +1,13 @@
 <script lang="ts">
   import Transcript from './transcript/Transcript.svelte';
+  import type { PageData } from './$types';
+  import type { Project } from "$lib/types/Project";
+	
+	export let data: PageData;
+  let openFile = data.file as Project;
+  let openFileContent = data.filecontent;
+  let filepathToVid = openFile.video;
+
   
   let segments = [
         { id: 0, startTimestamp: "00:00:00", endTimestamp: "00:00:00", text: "" },

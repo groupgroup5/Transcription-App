@@ -43,7 +43,7 @@ export async function addFileEntry(file: File, filepath: String, srtFilepath: St
             lastModified )
         VALUES ( ?, ?, ?, ?, ?, ?);`; 
     const stmt = db.prepare(sql);
-    const runstmt = stmt.run(getNum, file.name, filepath, srtFilepath, (new Date()).toDateString(), file.lastModified);
+    const runstmt = stmt.run(getNum, file.name.slice(0, -4), filepath, srtFilepath, (new Date()).toDateString(), file.lastModified);
 }
 
 export function updateFileName(fileId: number, filename: String) {

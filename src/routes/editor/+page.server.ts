@@ -4,45 +4,19 @@ import * as db from "$lib/server/db";
 import type { Project } from "$lib/types/Project.js";
 import type { PageServerLoad } from './$types';
 
-function directoryGenerators() {
-    fs.mkdirSync('src/uploads');
-    fs.mkdirSync('src/uploads/audio-video');
-    fs.mkdirSync('src/uploads/srt');
-}
+export const load: PageServerLoad = async ({ params, url }) => {
+    let id = url.searchParams.get('id');
+    let file = db.getEntry(id === null? -1 : parseInt(id)) as Project;
+    db.updateFileTime(file.id);
 
-export const load: PageServerLoad = async ({ params }) => {
     return {
-        projects: db.getEntry(-1),
-        title: 'Home',
+        file: file as unknown,
+        filecontent: fs.existsSync(file.subs) ? fs.readFileSync(file.subs, {encoding: 'utf8'}) : null,
+        title: 'Editor',
     };
 };
 
 export const actions: Actions = {
-    uploadFile: async({ request }) => {
-        const uploadFileForm = await request.formData();
-
-        const file = uploadFileForm.get('importFile')?.valueOf() as File;
-        console.log(
-            file?.name,
-            file?.type,
-            file?.webkitRelativePath
-        );
-
-        const buffer = Buffer.from(await file.arrayBuffer());
-        let newFileName = file.name.replace(/[.](?=.*[.])/g, "");
-        newFileName = newFileName.replace(/\s+/g, "");
-
-        if (!fs.existsSync('src/uploads')){
-            directoryGenerators();
-        }
-        let filepath = 'src/uploads/audio-video/' + newFileName;
-        fs.writeFileSync(filepath, buffer, "base64");
-
-        let newSrtFilepath = 'src/uploads/srt/' + newFileName.slice(0, -3) + 'srt'
-        fs.writeFileSync(newSrtFilepath, " ", "base64");
-
-        db.addFileEntry(file, filepath, newSrtFilepath);
-    },
     renameFile: async({ request }) => {
         const renameFileForm = await request.formData();
 

@@ -54,6 +54,7 @@
     "unified": "^10.1.2",
     "unist-builder": "^4.0.0",
     "unist-util-visit": "^5.0.0",
+    "utf8": "^3.0.0",
     "vidstack": "^1.11.18"
   },
   "devDependencies": {
