@@ -1,12 +1,5 @@
 <script lang="ts">
   import Transcript from './transcript/Transcript.svelte';
-  import type { PageData } from './$types';
-  import type Project from '../Project.svelte';
-	
-	export let data: PageData;
-  let openFile = data.file as Project;
-  let openFileContent = data.filecontent;
-
   
   let segments = [
         { id: 0, startTimestamp: "00:00:00", endTimestamp: "00:00:00", text: "" },

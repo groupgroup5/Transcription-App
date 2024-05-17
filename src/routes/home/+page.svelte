@@ -2,11 +2,11 @@
   import { goto } from "$app/navigation";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
   import * as Dialog from "$lib/components/ui/dialog";
-  import type Project from "../Project.svelte";
+  import type Project from "./Project.svelte";
   import type { PageData } from './$types';
 
 	export let data: PageData;
-  $: projects = data.projects as Project[];
+  let projects = data.projects as Project[];
 
   let currentFile: HTMLFormElement;
   let currentRename: HTMLFormElement;
@@ -15,12 +15,12 @@
 
   function clickImportFile() {
     currentFile.requestSubmit();
-    const id = projects[-1].id;
-    goto(`editor/?id=${id}`);
+    goto('editor');
   }
 
-  function clickFile(id: number) {
-    goto(`editor/?id=${id}`);
+  function clickFile() {
+    //open file
+    goto('editor');
   }
 
   function clickRenameFile() {
@@ -82,7 +82,7 @@
   <div class="flex flex-col w-full space-y-2 self-center overflow-y-auto">
     {#each filteredProjects as project (project.id)}
       <div class="flex flex-rows justify-between border border-gray-300 p-2 h-12 rounded-lg items-center hover:bg-gray-300">
-          <button class="text-2xl font-bold mb-2 outline-none" on:click={() => {clickFile(project.id)}}>{ project.name }</button>
+          <button class="text-2xl font-bold mb-2 outline-none" on:click={() => {clickFile()}}>{ project.name }</button>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger>⋯</DropdownMenu.Trigger>
             <DropdownMenu.Content>
@@ -113,7 +113,7 @@
                     </label>
                   </DropdownMenu.Item>
                 </form>
-                <DropdownMenu.Item on:click={() => goto(`${project.subs}`)}>
+                <DropdownMenu.Item>
                   Export File
                 </DropdownMenu.Item>
               </DropdownMenu.Group>

@@ -1,10 +1,10 @@
 import type { Actions } from "@sveltejs/kit";
 import fs from "node:fs";
 import * as db from "$lib/server/db";
-import type Project from "../Project.svelte";
-import type { PageServerLoad } from './$types';
+import type Project from "./Project.svelte";
+import type { PageLoad } from "../$types";
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageLoad = async ({ params }) => {
     return {
         projects: db.getEntry(-1),
         title: 'Home',
@@ -54,20 +54,5 @@ export const actions: Actions = {
         }
         fs.unlink(entryToDelete.video, (err => {if (err) console.log(err);}));
         db.deleteEntry(id);
-    },
-    saveFile: async({request}) => {
-        const saveFileForm = await request.formData();
-
-        const id = saveFileForm.get('fileId')?.valueOf() as number;
-        const content = saveFileForm.get('content')?.valueOf() as File;
-        console.log(id, content);
-
-        let entryToSave = db.getEntry(id) as Project;
-        const filepath = entryToSave.subs;
-
-        const buffer = Buffer.from(await content.arrayBuffer());
-
-        fs.writeFileSync(filepath, buffer, "base64");
-        db.updateFileTime(id);
     }
 }
