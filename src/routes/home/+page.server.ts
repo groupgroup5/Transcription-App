@@ -1,7 +1,7 @@
 import type { Actions } from "@sveltejs/kit";
 import fs from "node:fs";
 import * as db from "$lib/server/db";
-import type Project from "../Project.svelte";
+import type { Project } from "$lib/types/Project.js";
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -30,7 +30,7 @@ export const actions: Actions = {
         fs.writeFileSync(filepath, buffer, "base64");
 
         let newSrtFilepath = 'src/uploads/srt/' + newFileName.slice(0, -3) + 'srt'
-        fs.writeFileSync(filepath, " ", "base64");
+        fs.writeFileSync(newSrtFilepath, " ", "base64");
 
         db.addFileEntry(file, filepath, newSrtFilepath);
     },

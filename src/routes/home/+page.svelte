@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
   import * as Dialog from "$lib/components/ui/dialog";
-  import type Project from "../Project.svelte";
+  import type { Project } from "../../lib/types/Project.js";
   import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -11,7 +11,6 @@
   let currentFile: HTMLFormElement;
   let currentRename: HTMLFormElement;
   let currentDelete: HTMLFormElement;
-  let currentExport: HTMLFormElement;
 
   function clickImportFile() {
     currentFile.requestSubmit();
@@ -113,7 +112,10 @@
                     </label>
                   </DropdownMenu.Item>
                 </form>
-                <DropdownMenu.Item on:click={() => goto(`${project.subs}`)}>
+                <DropdownMenu.Item on:click={() => { 
+                    const toFetch = project.subs;
+                    fetch(`${toFetch}`); } 
+                  }>
                   Export File
                 </DropdownMenu.Item>
               </DropdownMenu.Group>
