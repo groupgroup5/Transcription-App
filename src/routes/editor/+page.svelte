@@ -5,8 +5,8 @@
   import type { SegmentType } from './transcript/Segment.svelte';
 	
 	export let data: PageData;
-  let openFile = data.file as Project;
-  let filepathToVid = openFile.video;
+  const openFile = data.file as Project;
+  const filepathToVid = openFile.video;
   
   // Load transcript file content to segments variable
   let transcriptFileContent = data.filecontent; 
@@ -15,19 +15,22 @@
           id: index,
           startTimestamp: line.substring(1, 7),
           endTimestamp: line.substring(12, 18),
-          text: line.substring(22)
+          text: line.substring(21)
   }));
-  
 
-  function sendSegmentsToContents(){
-    let contentInArray = [];
-    contentInArray = segments.map((segment) => (
+  let contentInArray = [];
+  $: contentInArray = segments.map((segment) => (
       "[" + segment.startTimestamp + "s -> " + segment.endTimestamp + "s] " + segment.text
     ));
     
-    transcriptFileContent = contentInArray.join("\n");
+  $: transcriptFileContent = contentInArray.join("\n");
 
+  let saveFile: HTMLFormElement;
+
+  function saveFileFunc() {
+    saveFile.requestSubmit();
   }
+
 
 </script>
 
@@ -44,7 +47,11 @@
       </div>
       <div id="text-taskbar">
         <p>Text Editor Taskbar</p>
-        <button type="button" on:click={sendSegmentsToContents} class="rounded-md p-2 w-64 h-12 border border-gray-300 text-center align-middle hover:border-0 hover:bg-sky-600 hover:text-white">Save Transcript</button>
+        <form method="POST" bind:this={ saveFile } action="?/saveFile">
+          <input type="hidden" name="fileId" bind:value={ openFile.id } />
+          <input type="hidden" name="content" bind:value={ transcriptFileContent } />
+          <button type="button" on:click={ () => {saveFileFunc();} } class="rounded-md p-2 w-64 h-12 border border-gray-300 text-center align-middle hover:border-0 hover:bg-sky-600 hover:text-white">Save Transcript</button>
+        </form>
       </div>
     </div>
   </aside>
