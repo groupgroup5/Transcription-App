@@ -62,7 +62,6 @@ export let removeSegment;
   #inline-text{
     height: 100%;
     width: calc(85% - 10px);
-    color: #000;
     margin-left: 20px;
   }
 
