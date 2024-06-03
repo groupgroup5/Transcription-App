@@ -3,9 +3,13 @@ import fs from "node:fs";
 import * as db from "$lib/server/db";
 import type { Project } from "$lib/types/Project.js";
 import type { PageServerLoad } from './$types';
+import { goto } from "$app/navigation";
+
+let fileId = -1;
 
 export const load: PageServerLoad = async ({ params, url }) => {
     let id = url.searchParams.get('id');
+    id = id ? id : `${fileId}`;
     let file = db.getEntry(id === null? -1 : parseInt(id)) as Project;
     db.updateFileTime(file.id);
 
@@ -17,40 +21,18 @@ export const load: PageServerLoad = async ({ params, url }) => {
 };
 
 export const actions: Actions = {
-    renameFile: async({ request }) => {
-        const renameFileForm = await request.formData();
-
-        const id = renameFileForm.get('renameFileId')?.valueOf() as number;
-        const filename = renameFileForm.get('renameFileString')?.valueOf() as string;
-        console.log(id, filename);
-    },
-    deleteFile: async({ request }) => {
-        const deleteFileForm = await request.formData();
-
-        const id = deleteFileForm.get('deleteFile')?.valueOf() as number;
-        console.log(id);
-
-        let entryToDelete = db.getEntry(id) as Project;
-
-        if (fs.existsSync(entryToDelete.subs)) {
-            fs.unlink(entryToDelete.subs, (err => {if (err) console.log(err);}));
-        }
-        fs.unlink(entryToDelete.video, (err => {if (err) console.log(err);}));
-        db.deleteEntry(id);
-    },
     saveFile: async({request}) => {
         const saveFileForm = await request.formData();
 
-        const id = saveFileForm.get('fileId')?.valueOf() as number;
-        const content = saveFileForm.get('content')?.valueOf() as File;
-        console.log(id, content);
+        fileId = saveFileForm.get('fileId')?.valueOf() as number;
+        const id = fileId;
+        const content = saveFileForm.get('content')?.valueOf() as string;
 
         let entryToSave = db.getEntry(id) as Project;
         const filepath = entryToSave.subs;
 
-        const buffer = Buffer.from(await content.arrayBuffer());
+        console.log(content, filepath, id);
 
-        fs.writeFileSync(filepath, buffer, "base64");
-        db.updateFileTime(id);
+        fs.writeFileSync(filepath, content, "utf8");
     }
 }
